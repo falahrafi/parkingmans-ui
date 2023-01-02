@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
+.btn-add {
+   /* margin-top: 10px; */
+   margin-bottom: 0px;
+   padding: 8px 12px;
+   background-image: linear-gradient(to right, #178b86, #20afc2, #20afc2, #178b86);
+   background-position: left;
+   background-size: 200%;
+   border: none;
+   /* border-radius: 32px; */
+   box-shadow: 0 6px 30px 0px rgba(0, 76, 239, 0.3);
+   color: white;
+   font-family: 'Montserrat', sans-serif;
+   font-size: 14px;
+   font-weight: 600;
+   text-transform: none;
+   transition: all 0.3s ease-in-out;
+   cursor: pointer;
+}
+.btn-add:hover {
+   background-position: right;
+   color: white;
+   /* font-size: 15px; */
+}
+
+
+.btn-edit {
+   /* margin-top: 10px; */
+   margin-bottom: 0px;
+   padding: 8px 12px;
+   background-image: linear-gradient(to right, #b3901f, #f1c32e, #f1c32e, #b3901f);
+   background-position: left;
+   background-size: 200%;
+   border: none;
+   /* border-radius: 32px; */
+   box-shadow: 0 6px 30px 0px rgba(239, 203, 0, 0.3);
+   color: white;
+   /* font-family: 'Montserrat', sans-serif; */
+   font-size: 14px;
+   font-weight: 600;
+   text-transform: none;
+   transition: all 0.3s ease-in-out;
+   cursor: pointer;
+}
+.btn-edit:hover {
+   background-position: right;
+   color: white;
+   font-size: 15px;
+}
+
+
+.btn-delete {
+   /* margin-top: 10px; */
+   margin-bottom: 0px;
+   padding: 8px 12px;
+   background-image: linear-gradient(to right, #9a231a, #ff4335, #ff4335, #9a231a);
+   background-position: left;
+   background-size: 200%;
+   border: none;
+   /* border-radius: 32px; */
+   box-shadow: 0 6px 30px 0px rgba(239, 16, 0, 0.3);
+   color: white;
+   /* font-family: 'Montserrat', sans-serif; */
+   font-size: 14px;
+   font-weight: 600;
+   transition: all 0.3s ease-in-out;
+   cursor: pointer;
+}
+.btn-delete:hover {
+   background-position: right;
+   color: white;
+   font-size: 15px;
+}
+
+
+.btn-back {
+   /* margin-top: 10px; */
+   margin-bottom: 0px;
+   padding: 8px 12px;
+   background-color: #e4e4e4;
+   border: none;
+   box-shadow: none;
+   color: #191919;
+   /* font-family: 'Montserrat', sans-serif; */
+   font-size: 14px;
+   font-weight: 600;
+   text-transform: none;
+   transition: all 0.3s ease-in-out;
+   cursor: pointer;
+}
