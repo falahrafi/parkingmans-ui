@@ -30,6 +30,10 @@ import PaymentsEdit from "@/views/Payments/Edit.vue";
 
 import PaymentStatuses from "@/views/PaymentStatuses/Index.vue";
 
+import Users from "@/views/Users/Index.vue";
+import UsersCreate from "@/views/Users/Create.vue";
+import UsersEdit from "@/views/Users/Edit.vue";
+
 import Billing from "@/views/Billing.vue";
 import VirtualReality from "@/views/VirtualReality.vue";
 import Profile from "@/views/Profile.vue";
@@ -147,6 +151,21 @@ const routes = [
     path: "/payment-statuses",
     name: "Payment Statuses",
     component: PaymentStatuses,
+  },
+  {
+    path: "/users",
+    name: "Users",
+    component: Users,
+  },
+  {
+    path: "/users/create",
+    name: "Add Users",
+    component: UsersCreate,
+  },
+  {
+    path: "/users/edit/:id",
+    name: "Edit Users",
+    component: UsersEdit,
   },
   {
     path: "/billing",

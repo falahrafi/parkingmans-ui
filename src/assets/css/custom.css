@@ -11,6 +11,15 @@
    color: white !important;
 }
 
+.label-outline-black {
+   padding: 4px 10px;
+   background-color: #EEEEEE;
+   border: 1px solid #2c2c2c;
+   border-radius: 4px;
+   color: #2c2c2c !important;
+   font-weight: bold;
+}
+
 .navbar-vertical .navbar-nav > .nav-item .nav-link.active .icon {
    background-color: rgb(55, 191, 196) !important;
    background-image: none;
