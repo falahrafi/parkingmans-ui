@@ -11,11 +11,11 @@
           </div>
           <div class="card-body px-0 pt-0 pb-2">
             <div class="table-responsive p-0">
-              <table class="table align-items-center mb-0">
+              <table class="table text-center align-items-center mb-0">
                 <thead>
                   <tr>
                     <th
-                      class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                      class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-black"
                     >
                       ID
                     </th>
@@ -39,7 +39,7 @@
                 <tbody>
                   <tr v-for="parkingSlot, index in parkingSlots.data" :key="index">
                     <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">{{ parkingSlot.id }}</span>
+                      <span class="text-secondary text-xs font-weight-bold text-black">{{ parkingSlot.id }}</span>
                     </td>
                     <td>
                       <span class="text-secondary text-xs font-weight-bold label-black">{{ parkingSlot.slotNumber }}</span>

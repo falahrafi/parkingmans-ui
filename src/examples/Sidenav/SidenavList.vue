@@ -62,6 +62,32 @@
         </sidenav-collapse>
       </li>      
       <li class="nav-item">
+        <sidenav-collapse navText="Booking Statuses" :to="{ name: 'Booking Statuses' }">
+          <template #icon>
+            <office />
+          </template>
+        </sidenav-collapse>
+      </li>      
+      <li class="mt-3 nav-item">
+        <h6 class="text-xs ps-4 text-uppercase font-weight-bolder opacity-6">
+          Payment
+        </h6>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse navText="Payments" :to="{ name: 'Payments' }">
+          <template #icon>
+            <office />
+          </template>
+        </sidenav-collapse>
+      </li>      
+      <li class="nav-item">
+        <sidenav-collapse navText="Payment Statuses" :to="{ name: 'Payment Statuses' }">
+          <template #icon>
+            <office />
+          </template>
+        </sidenav-collapse>
+      </li>      
+      <li class="nav-item">
         <sidenav-collapse navText="Dashboard" :to="{ name: 'Dashboard' }">
           <template #icon>
             <shop />

@@ -22,6 +22,14 @@ import Bookings from "@/views/Bookings/Index.vue";
 import BookingsCreate from "@/views/Bookings/Create.vue";
 import BookingsEdit from "@/views/Bookings/Edit.vue";
 
+import BookingStatuses from "@/views/BookingStatuses/Index.vue";
+
+import Payments from "@/views/Payments/Index.vue";
+import PaymentsCreate from "@/views/Payments/Create.vue";
+import PaymentsEdit from "@/views/Payments/Edit.vue";
+
+import PaymentStatuses from "@/views/PaymentStatuses/Index.vue";
+
 import Billing from "@/views/Billing.vue";
 import VirtualReality from "@/views/VirtualReality.vue";
 import Profile from "@/views/Profile.vue";
@@ -114,6 +122,31 @@ const routes = [
     path: "/bookings/edit/:id",
     name: "Edit Bookings",
     component: BookingsEdit,
+  },
+  {
+    path: "/booking-statuses",
+    name: "Booking Statuses",
+    component: BookingStatuses,
+  },
+  {
+    path: "/payments",
+    name: "Payments",
+    component: Payments,
+  },
+  {
+    path: "/payments/create",
+    name: "Add Payments",
+    component: PaymentsCreate,
+  },
+  {
+    path: "/payments/edit/:id",
+    name: "Edit Payments",
+    component: PaymentsEdit,
+  },
+  {
+    path: "/payment-statuses",
+    name: "Payment Statuses",
+    component: PaymentStatuses,
   },
   {
     path: "/billing",

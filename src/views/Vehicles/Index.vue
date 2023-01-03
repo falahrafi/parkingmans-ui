@@ -15,7 +15,7 @@
                 <thead>
                   <tr>
                     <th
-                      class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                      class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-black"
                     >
                       ID
                     </th>
@@ -52,7 +52,7 @@
                 <tbody>
                   <tr v-for="vehicle, index in vehicles.data" :key="index">
                     <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">{{ vehicle.id }}</span>
+                      <span class="text-secondary text-xs font-weight-bold text-black">{{ vehicle.id }}</span>
                     </td>
                     <td>
                       <span class="text-secondary text-xs font-weight-bold">{{ vehicle.plateNumber }}</span>
