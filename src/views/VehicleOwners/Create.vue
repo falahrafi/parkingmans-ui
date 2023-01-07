@@ -61,7 +61,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-row">
+              <!-- <div class="form-row">
                 <div class="form-group col">
                   <label for="inputAvatar">
                     <b>Avatar</b>
@@ -72,6 +72,28 @@
                     class="form-control"
                     placeholder="Masukkan avatar..."
                     v-model="vehicleOwner.avatar"
+                  >
+                  <div v-if="validation.avatar" class="text-danger">
+                    {{ validation.avatar[0] }}
+                  </div>
+                </div>
+              </div> -->
+              <div class="form-row">
+                <div class="form-group col">
+                  <label
+                    for="inputAvatar"
+                    class="form-label"
+                  >
+                    Avatar
+                  </label>
+                  <div v-if="previewImage">
+                    <img :src="previewImage" width="150" class="img-thumbnail mb-2"/>
+                  </div>
+                  <input
+                    class="form-control"
+                    type="file"
+                    id="inputAvatar"
+                    @change="upload"
                   >
                   <div v-if="validation.avatar" class="text-danger">
                     {{ validation.avatar[0] }}
@@ -136,7 +158,7 @@ export default {
       username: '',
       password: '',
       fullname: '',
-      avatar: '',
+      avatar: 'avatar.png',
       contact: '',
       email: '',
     });
@@ -146,9 +168,18 @@ export default {
     const router = useRouter();
 
     function store() {
+      // Siapkan Form Data
+      let formData = new FormData()
+      formData.append('username', vehicleOwner.username)
+      formData.append('password', vehicleOwner.password)
+      formData.append('fullname', vehicleOwner.fullname)
+      formData.append('avatar', vehicleOwner.avatar)
+      formData.append('contact', vehicleOwner.contact)
+      formData.append('email', vehicleOwner.email)
+
       axios.post(
         base_url + '/api/v1/vehicle_owners',
-        vehicleOwner
+        formData
       )
       .then(() => {
         router.push({
@@ -156,15 +187,26 @@ export default {
         });
       })
       .catch((err) => {
-        validation.value = err.response.data.errors
+        if (err.response.data.errors) validation.value = err.response.data.errors
       })
+    }
+
+    let previewImage = ref([]);
+    previewImage.value = null;
+    
+    function upload(e) {
+      let files = e.target.files[0]
+      previewImage.value = URL.createObjectURL(files)
+      vehicleOwner.avatar = files
     }
 
     return {
       vehicleOwner,
       validation,
       router,
-      store
+      store,
+      previewImage,
+      upload
     }
   }
 };

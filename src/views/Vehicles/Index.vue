@@ -8,6 +8,14 @@
         <div class="card mb-4">
           <div class="card-header pb-0">
             <h6>Vehicles</h6>
+            <h3 v-if="isFullyLoaded==false" class="text-center mt-4 mb-5">
+              <div class="spinner-border loading-spinner" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <div class="loading-text">
+                Sedang mengambil data...
+              </div>
+            </h3>
           </div>
           <div class="card-body px-0 pt-0 pb-2">
             <div class="table-responsive p-0">
@@ -64,7 +72,10 @@
                       <p class="text-secondary text-wrap text-xs font-weight-bold">{{ vehicle.description }}</p>
                     </td>
                     <td>
-                      <span class="text-secondary text-xs font-weight-bold">{{ vehicle.image }}</span>
+                      <div>
+                        <img :src="'images/'+vehicle.image" width="150" class="img-thumbnail mb-2" />
+                      </div>
+                      <!-- <span class="text-secondary text-xs font-weight-bold">{{ vehicle.image }}</span> -->
                     </td>
                     <td class="text-center">
                       <span class="text-secondary text-xs font-weight-bold label-black">{{ vehicle.vehicleOwnerId }}</span>
@@ -105,11 +116,14 @@ export default {
     // Reactive State
     let vehicles = ref([]);
     let categories = ref([]);
+
+    let isFullyLoaded = ref([]);
     
     onMounted(() => {
       // Ambil data vehicle
       axios.get(base_url + '/api/v1/vehicles')
       .then((result) => {
+        isFullyLoaded.value = true;
         vehicles.value = result.data;
       }).catch((err) => {
         console.log(err.response)
@@ -150,6 +164,7 @@ export default {
 
     return {
       vehicles,
+      isFullyLoaded,
       getCategory,
       destroy
     }

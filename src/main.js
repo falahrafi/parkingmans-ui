@@ -29,6 +29,9 @@ appInstance.use(store);
 appInstance.use(router);
 appInstance.use(SoftUIDashboard);
 
-appInstance.config.globalProperties.baseUrl = 'http://falahrafi-webservice.my.id';
+appInstance.config.devtools = true;
+
+appInstance.config.globalProperties.baseUrl = 'https://falahrafi-webservice.my.id';
+// appInstance.config.globalProperties.baseUrl = "http://127.0.0.1:8000";
 
 appInstance.mount("#app");

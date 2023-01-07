@@ -46,13 +46,27 @@
                   </div>
                 </div>
               </div>
-              <div class="form-row">
+              <!-- <div class="form-row">
                 <div class="form-group col">
                   <label for="inputAvatar">
                     <b>Avatar</b>
                   </label>
                   <input id="inputAvatar" type="text" class="form-control" placeholder="Masukkan avatar..."
                     v-model="user.avatar">
+                  <div v-if="validation.avatar" class="text-danger">
+                    {{ validation.avatar[0] }}
+                  </div>
+                </div>
+              </div> -->
+              <div class="form-row">
+                <div class="form-group col">
+                  <label for="inputAvatar" class="form-label">
+                    Avatar
+                  </label>
+                  <div v-if="previewImage">
+                    <img :src="previewImage" width="150" class="img-thumbnail mb-2" />
+                  </div>
+                  <input class="form-control" type="file" id="inputAvatar" @change="upload">
                   <div v-if="validation.avatar" class="text-danger">
                     {{ validation.avatar[0] }}
                   </div>
@@ -131,9 +145,21 @@ export default {
     const route = useRoute();
 
     function update() {
-      axios.put(
+      // Siapkan Form Data
+      let formData = new FormData()
+      formData.append('username', user.username)
+      formData.append('password', user.password)
+      formData.append('fullname', user.fullname)
+      formData.append('avatar', user.avatar)
+      formData.append('contact', user.contact)
+      formData.append('email', user.email)
+      formData.append('userLevel', user.userLevel)
+
+      // Karena axios.put tidak bisa memproses FormData
+      formData.append("_method", "PUT");
+      axios.post(
         base_url + '/api/v1/users/' + route.params.id,
-        user
+        formData
       )
         .then(() => {
           router.push({
@@ -159,18 +185,30 @@ export default {
           user.contact = result.data.data.contact
           user.email = result.data.data.email
           user.userLevel = result.data.data.userLevel
+          previewImage.value = '../../images/' + result.data.data.avatar
         })
         .catch((err) => {
           console.log(err.response)
         });
-    });    
+    });   
+
+    let previewImage = ref([]);
+    previewImage.value = null;
+
+    function upload(e) {
+      let files = e.target.files[0]
+      previewImage.value = URL.createObjectURL(files)
+      user.avatar = files
+    }
 
     return {
       user,
       validation,
       router,
       route,
-      update
+      update,
+      previewImage,
+      upload
     }
   }
 };

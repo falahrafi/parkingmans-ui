@@ -8,6 +8,14 @@
         <div class="card mb-4">
           <div class="card-header pb-0">
             <h6>Payments</h6>
+            <h3 v-if="isFullyLoaded==false" class="text-center mt-4 mb-5">
+              <div class="spinner-border loading-spinner" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <div class="loading-text">
+                Sedang mengambil data...
+              </div>
+            </h3>
           </div>
           <div class="card-body px-0 pt-0 pb-2">
             <div class="table-responsive p-0">
@@ -115,11 +123,14 @@ export default {
     // Reactive State
     let payments = ref([]);
     let statuses = ref([]);
+
+    let isFullyLoaded = ref([]);
     
     onMounted(() => {
       // Ambil data payment
       axios.get(base_url + '/api/v1/payments')
       .then((result) => {
+        isFullyLoaded.value = true;
         payments.value = result.data;
       }).catch((err) => {
         console.log(err.response)
@@ -174,6 +185,7 @@ export default {
 
     return {
       payments,
+      isFullyLoaded,
       getStatus,
       getAmount,
       destroy

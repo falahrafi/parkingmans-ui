@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
+.card-body {
+   border-radius: 0 0 1rem 1rem;
+}
+
 .text-black {
    color: #344767 !important;
 }
@@ -23,6 +27,14 @@
 .navbar-vertical .navbar-nav > .nav-item .nav-link.active .icon {
    background-color: rgb(55, 191, 196) !important;
    background-image: none;
+}
+
+.navbar-vertical.navbar-expand-xs {
+   max-width: 17.225rem !important;
+}
+
+.nav-icon {
+   color: black !important;
 }
 
 .custom-card {
@@ -49,4 +61,28 @@
    font-size: 20px;
    font-weight: 700;
    text-align: center !important;
+}
+
+.loading-text {
+   color: #178b86;
+}
+
+.loading-spinner {
+   color: #f1c32e;
+}
+
+.dashboard-photo {
+   border-radius: 16px;
+}
+
+.dashboard-paragraph {
+   margin-bottom: 2.1rem;
+}
+
+.endpoint-api-text {
+   padding: 6px 12px;
+   background-color: #21304b;
+   border-radius: 8px;
+   color: white;
+   font-family: 'Montserrat', sans-serif;
 }

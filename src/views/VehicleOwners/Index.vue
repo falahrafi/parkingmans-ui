@@ -8,6 +8,14 @@
         <div class="card mb-4">
           <div class="card-header pb-0">
             <h6>Vehicle Owners</h6>
+            <h3 v-if="isFullyLoaded==false" class="text-center mt-4 mb-5">
+              <div class="spinner-border loading-spinner" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <div class="loading-text">
+                Sedang mengambil data...
+              </div>
+            </h3>
           </div>
           <div class="card-body px-0 pt-0 pb-2">
             <div class="table-responsive p-0">
@@ -19,11 +27,11 @@
                     >
                       ID
                     </th>
-                    <th
+                    <!-- <th
                       class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                     >
                       Avatar
-                    </th>
+                    </th> -->
                     <th
                       class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                     >
@@ -51,14 +59,14 @@
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold text-black">{{ vehicleOwner.id }}</span>
                     </td>
-                    <td>
+                    <!-- <td>
                       <span class="text-secondary text-xs font-weight-bold">{{ vehicleOwner.avatar }}</span>
-                    </td>
+                    </td> -->
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div>
                           <soft-avatar
-                            :img="img1"
+                            :img="'images/'+vehicleOwner.avatar"
                             size="sm"
                             border-radius="lg"
                             class="me-3"
@@ -106,40 +114,24 @@
 
 <script>
 import SoftAvatar from "@/components/SoftAvatar.vue";
-// import SoftButton from "@/components/SoftButton.vue";
-// import SoftBadge from "@/components/SoftBadge.vue";
-import img1 from "../../assets/img/team-2.jpg";
-import img2 from "../../assets/img/team-3.jpg";
-import img3 from "../../assets/img/team-4.jpg";
-import img4 from "../../assets/img/team-3.jpg";
-import img5 from "../../assets/img/team-2.jpg";
-import img6 from "../../assets/img/team-4.jpg";
 
 import axios from 'axios';
 import { onMounted, ref, getCurrentInstance } from 'vue';
 
 export default {
-  name: "authors-table",
-  data() {
-    return {
-      img1,
-      img2,
-      img3,
-      img4,
-      img5,
-      img6,
-    };
-  },
   setup() {
     const base_url = getCurrentInstance().appContext.config.globalProperties.baseUrl;
     
     // Reactive State
     let vehicleOwners = ref([]);
+
+    let isFullyLoaded = ref([]);
     
     onMounted(() => {
       // Get data from API Endpoint
       axios.get(base_url + '/api/v1/vehicle_owners')
       .then((result) => {
+        isFullyLoaded.value = true;
         vehicleOwners.value = result.data;
       }).catch((err) => {
         console.log(err.response)
@@ -160,13 +152,12 @@ export default {
 
     return {
       vehicleOwners,
+      isFullyLoaded,
       destroy
     }
   },
   components: {
-    SoftAvatar,
-    // SoftButton,
-    // SoftBadge,
+    SoftAvatar
   },
 };
 </script>

@@ -52,12 +52,24 @@
                     {{ validation.description[0] }}
                   </div>
                 </div>
-                <div class="form-group col-md-6">
+                <!-- <div class="form-group col-md-6">
                   <label for="inputImage">
                     <b>Image</b>
                   </label>
                   <input id="inputImage" type="text" class="form-control" placeholder="Masukkan gambar..."
                     v-model="vehicle.image">
+                  <div v-if="validation.image" class="text-danger">
+                    {{ validation.image[0] }}
+                  </div>
+                </div> -->
+                <div class="form-group col-md-6">
+                  <label for="inputImage" class="form-label">
+                    Image
+                  </label>
+                  <div v-if="previewImage">
+                    <img :src="previewImage" width="150" class="img-thumbnail mb-2" />
+                  </div>
+                  <input class="form-control" type="file" id="inputImage" @change="upload">
                   <div v-if="validation.image" class="text-danger">
                     {{ validation.image[0] }}
                   </div>
@@ -115,9 +127,19 @@ export default {
     const route = useRoute();
 
     function update() {
-      axios.put(
+      // Siapkan Form Data
+      let formData = new FormData()
+      formData.append('vehicleCategoryId', vehicle.vehicleCategoryId)
+      formData.append('plateNumber', vehicle.plateNumber)
+      formData.append('description', vehicle.description)
+      formData.append('image', vehicle.image)
+      formData.append('vehicleOwnerId', vehicle.vehicleOwnerId)
+
+      // Karena axios.put tidak bisa memproses FormData
+      formData.append("_method", "PUT");
+      axios.post(
         base_url + '/api/v1/vehicles/' + route.params.id,
-        vehicle
+        formData
       )
       .then(() => {
         router.push({
@@ -153,6 +175,7 @@ export default {
         vehicle.description = result.data.data.description
         vehicle.image = result.data.data.image
         vehicle.vehicleOwnerId = result.data.data.vehicleOwnerId
+        previewImage.value = '../../images/' + result.data.data.image
       })
       .catch((err) => {
         console.log(err.response)
@@ -160,12 +183,23 @@ export default {
 
     });
 
+    let previewImage = ref([]);
+    previewImage.value = null;
+
+    function upload(e) {
+      let files = e.target.files[0]
+      previewImage.value = URL.createObjectURL(files)
+      vehicle.image = files
+    }    
+
     return {
       vehicle,
       vehicleOwners,
       validation,
       router,
-      update
+      update,
+      previewImage,
+      upload
     }
   }
 };

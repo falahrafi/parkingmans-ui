@@ -5,6 +5,14 @@
         <div class="card mb-4">
           <div class="card-header pb-0 mb-3">
             <h6>Booking Statuses</h6>
+            <h5 v-if="isFullyLoaded==false" class="text-center my-5">
+              <div class="spinner-border loading-spinner" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <div class="loading-text">
+                Sedang mengambil data...
+              </div>
+            </h5>
           </div>
           <div class="card-body px-0 pt-0 pb-2">
             <div class="container">
@@ -33,11 +41,14 @@ export default {
     
     // Reactive State
     let bookingStatuses = ref([]);
+
+    let isFullyLoaded = ref([]);
     
     onMounted(() => {
       // Ambil data vehicle categories
       axios.get(base_url + '/api/v1/booking_statuses')
       .then((result) => {
+        isFullyLoaded.value = true;
         bookingStatuses.value = result.data;
       }).catch((err) => {
         console.log(err.response)
@@ -45,7 +56,8 @@ export default {
     });
 
     return {
-      bookingStatuses
+      bookingStatuses,
+      isFullyLoaded,
     }
   }
 };

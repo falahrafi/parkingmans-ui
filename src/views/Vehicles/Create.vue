@@ -62,7 +62,7 @@
                     {{ validation.description[0] }}
                   </div>
                 </div>
-                <div class="form-group col-md-6">
+                <!-- <div class="form-group col-md-6">
                   <label for="inputImage">
                     <b>Image</b>
                   </label>
@@ -73,6 +73,18 @@
                     placeholder="Masukkan gambar..."
                     v-model="vehicle.image"
                   >
+                  <div v-if="validation.image" class="text-danger">
+                    {{ validation.image[0] }}
+                  </div>
+                </div> -->
+                <div class="form-group col-md-6">
+                  <label for="inputImage" class="form-label">
+                    Image
+                  </label>
+                  <div v-if="previewImage">
+                    <img :src="previewImage" width="150" class="img-thumbnail mb-2" />
+                  </div>
+                  <input class="form-control" type="file" id="inputImage" @change="upload">
                   <div v-if="validation.image" class="text-danger">
                     {{ validation.image[0] }}
                   </div>
@@ -123,7 +135,7 @@ export default {
       vehicleCategoryId: 'none',
       plateNumber: '',
       description: '',
-      image: '',
+      image: 'image.jpg',
       vehicleOwnerId: 'none',
     });
 
@@ -132,9 +144,17 @@ export default {
     const router = useRouter();
 
     function store() {
+      // Siapkan Form Data
+      let formData = new FormData()
+      formData.append('vehicleCategoryId', vehicle.vehicleCategoryId)
+      formData.append('plateNumber', vehicle.plateNumber)
+      formData.append('description', vehicle.description)
+      formData.append('image', vehicle.image)
+      formData.append('vehicleOwnerId', vehicle.vehicleOwnerId)
+      
       axios.post(
         base_url + '/api/v1/vehicles',
-        vehicle
+        formData
       )
       .then(() => {
         router.push({
@@ -142,9 +162,11 @@ export default {
         });
       })
       .catch((err) => {
-        validation.value = err.response.data.errors
-        if (vehicle.vehicleOwnerId == 'none') validation.value.vehicleOwnerId = ['The vehicle owner field is required.']
-        if (vehicle.vehicleCategoryId == 'none') validation.value.vehicleCategoryId = ['The vehicle category field is required.']
+        if (err.response.data.errors) {
+          validation.value = err.response.data.errors
+          if (vehicle.vehicleOwnerId == 'none') validation.value.vehicleOwnerId = ['The vehicle owner field is required.']
+          if (vehicle.vehicleCategoryId == 'none') validation.value.vehicleCategoryId = ['The vehicle category field is required.']          
+        }
       })
     }
 
@@ -161,12 +183,24 @@ export default {
         });
     });    
 
+
+    let previewImage = ref([]);
+    previewImage.value = null;
+
+    function upload(e) {
+      let files = e.target.files[0]
+      previewImage.value = URL.createObjectURL(files)
+      vehicle.image = files
+    }
+
     return {
       vehicle,
       vehicleOwners,
       validation,
       router,
-      store
+      store,
+      previewImage,
+      upload
     }
   }
 };

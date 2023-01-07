@@ -56,12 +56,12 @@
                     placeholder="Masukkan nama lengkap..."
                     v-model="vehicleOwner.fullname"
                   >
-                  <div v-if="validation.password" class="text-danger">
-                    {{ validation.password[0] }}
+                  <div v-if="validation.fullname" class="text-danger">
+                    {{ validation.fullname[0] }}
                   </div>
                 </div>
               </div>
-              <div class="form-row">
+              <!-- <div class="form-row">
                 <div class="form-group col">
                   <label for="inputAvatar">
                     <b>Avatar</b>
@@ -73,6 +73,20 @@
                     placeholder="Masukkan avatar..."
                     v-model="vehicleOwner.avatar"
                   >
+                  <div v-if="validation.avatar" class="text-danger">
+                    {{ validation.avatar[0] }}
+                  </div>
+                </div>
+              </div> -->
+              <div class="form-row">
+                <div class="form-group col">
+                  <label for="inputAvatar" class="form-label">
+                    Avatar
+                  </label>
+                  <div v-if="previewImage">
+                    <img :src="previewImage" width="150" class="img-thumbnail mb-2" />
+                  </div>
+                  <input class="form-control" type="file" id="inputAvatar" @change="upload">
                   <div v-if="validation.avatar" class="text-danger">
                     {{ validation.avatar[0] }}
                   </div>
@@ -157,6 +171,7 @@ export default {
         vehicleOwner.avatar = result.data.data.avatar
         vehicleOwner.contact = result.data.data.contact
         vehicleOwner.email = result.data.data.email
+        previewImage.value = '../../images/' + result.data.data.avatar
       })
       .catch((err) => {
         console.log(err.response)
@@ -164,9 +179,20 @@ export default {
     });
 
     function update() {
-      axios.put(
+      // Siapkan Form Data
+      let formData = new FormData()
+      formData.append('username', vehicleOwner.username)
+      formData.append('password', vehicleOwner.password)
+      formData.append('fullname', vehicleOwner.fullname)
+      formData.append('avatar', vehicleOwner.avatar)
+      formData.append('contact', vehicleOwner.contact)
+      formData.append('email', vehicleOwner.email)
+      
+      // Karena axios.put tidak bisa memproses FormData
+      formData.append("_method", "PUT");
+      axios.post(
         base_url + '/api/v1/vehicle_owners/' + route.params.id,
-        vehicleOwner
+        formData
       )
       .then(() => {
         router.push({
@@ -174,15 +200,26 @@ export default {
         });
       })
       .catch((err) => {
-        validation.value = err.response.data.errors
+         validation.value = err.response.data.errors
       })
+    }
+
+    let previewImage = ref([]);
+    previewImage.value = null;
+
+    function upload(e) {
+      let files = e.target.files[0]
+      previewImage.value = URL.createObjectURL(files)
+      vehicleOwner.avatar = files
     }
 
     return {
       vehicleOwner,
       validation,
       router,
-      update
+      update,
+      previewImage,
+      upload
     }
   }
 };
